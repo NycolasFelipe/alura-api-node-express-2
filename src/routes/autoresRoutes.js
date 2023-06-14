@@ -8,7 +8,7 @@ autores
   .get("/autores/:id", AutoresController.listarAutorPorId)
   .post("/autores", AutoresController.cadastrarAutor)
   .put("/autores/:id", AutoresController.atualizarAutor)
-  .delete("/autores/:id", AutoresController.excluirAutor)
+  .delete("/autores/:id", AutoresController.excluirAutor);
 
 
 export default autores;

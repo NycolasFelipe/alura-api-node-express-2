@@ -8,7 +8,7 @@ class AutoresController {
     } catch (err) {
       res.status(500).json(err);
     }
-  }
+  };
 
   static listarAutorPorId = async (req, res) => {
     try {
@@ -18,7 +18,7 @@ class AutoresController {
     } catch (err) {
       res.status(400).send({message : `${err.message} - Id do autor não localizado.`});
     }
-  }
+  };
 
   static cadastrarAutor = async (req, res) => {
     try {
@@ -28,7 +28,7 @@ class AutoresController {
     } catch (err) {
       res.status(500).send({message: err.message});
     }
-  }
+  };
 
   static atualizarAutor = async (req, res) => {
     try {
@@ -38,7 +38,7 @@ class AutoresController {
     } catch (err) {
       res.status(500).send({message: err.message});
     }
-  }
+  };
 
   static excluirAutor = async (req, res) => {
     try {
@@ -48,7 +48,7 @@ class AutoresController {
     } catch (err) {
       res.status(500).send({message: err.message});
     }
-  }
+  };
 }
 
 export default AutoresController;

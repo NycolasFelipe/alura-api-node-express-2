@@ -6,6 +6,6 @@ const routes = (app) => {
     livros,
     autores
   );
-}
+};
 
 export default routes;
