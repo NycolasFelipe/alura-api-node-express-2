@@ -1,4 +1,5 @@
 import livros from "../models/Livro.js";
+import NaoEncontrado from "../errors/NaoEncontrado.js";
 
 class LivrosController {
   static listarLivros = async (req, res, next) => {
@@ -18,7 +19,7 @@ class LivrosController {
       if (livro !== null) {
         res.status(200).send(livro);
       } else {
-        res.status(400).send({message : "Id do livro não localizado."});
+        next(new NaoEncontrado("Id do livro não localizado."));
       }
     } catch (err) {
       next(err);
@@ -38,8 +39,13 @@ class LivrosController {
   static atualizarLivro = async (req, res, next) => {
     try {
       const id = req.params.id;
-      await livros.findByIdAndUpdate(id, {$set: req.body});
-      res.status(200).send({message: "Livro atualizado com sucesso."});
+      let livro = await livros.findByIdAndUpdate(id, {$set: req.body});
+
+      if (livro !== null) {
+        res.status(200).send({message: "Livro atualizado com sucesso."});
+      } else {
+        next(new NaoEncontrado("Id do livro não localizado."));
+      }
     } catch (err) {
       next(err);
     }
@@ -48,8 +54,12 @@ class LivrosController {
   static excluirLivro = async (req, res, next) => {
     try {
       const id = req.params.id;
-      await livros.findByIdAndDelete(id);
-      res.status(200).send({message: "Livro excluído com sucesso."});
+      let livro = await livros.findByIdAndDelete(id);
+      if (livro !== null) {
+        res.status(200).send({message: "Livro excluído com sucesso."});
+      } else {
+        next(new NaoEncontrado("Id do livro não localizado."));
+      }
     } catch (err) {
       next(err);
     }
@@ -58,8 +68,12 @@ class LivrosController {
   static listarLivroPorEditora = async (req, res, next) => {
     try {
       const editora = req.query.editora;
-      let livro = await livros.find({"editora": editora}, {});
-      res.status(200).send(livro);
+      let livro = await livros.find({"editora": editora});
+      if (livro !== null) {
+        res.status(200).send(livro);
+      } else {
+        next(new NaoEncontrado("Id do livro não localizado."));
+      }
     } catch (err) {
       next(err);
     }
